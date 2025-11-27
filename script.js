@@ -38,10 +38,14 @@ const getImage = (item) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Footer Injection
-    document.getElementById('year').textContent = new Date().getFullYear();
-    document.getElementById('footer-address').textContent = companyDetails.address;
-    document.getElementById('footer-email').textContent = companyDetails.email;
-    document.getElementById('footer-phones').innerHTML = companyDetails.phones.map(p => `<div>📞 ${p}</div>`).join('');
+    const yearEl = document.getElementById('year');
+    if(yearEl) yearEl.textContent = new Date().getFullYear();
+    const fAddress = document.getElementById('footer-address');
+    const fPhones = document.getElementById('footer-phones');
+    const fEmail = document.getElementById('footer-email');
+    if (fAddress) fAddress.textContent = companyDetails.address;
+    if (fEmail) fEmail.textContent = companyDetails.email;
+    if (fPhones) fPhones.innerHTML = companyDetails.phones.map(p => `<div>📞 ${p}</div>`).join('');
     
     // 2. Mobile Menu
     const menuToggle = document.querySelector('.menu-toggle');
@@ -56,9 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Hero Animation
+    // 3. Hero Animation & Glowing Floors
     const elevatorMover = document.querySelector('.elevator-cabin-mover');
     const elevatorShaft = document.querySelector('.elevator-shaft');
+    const floorContainer = document.getElementById('floor-display');
+
     if (elevatorMover) {
         let elevatorAnim = gsap.to(elevatorMover, { y: "-380px", duration: 5, ease: "power2.inOut", repeat: -1, yoyo: true });
         if (elevatorShaft) {
@@ -66,9 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             elevatorShaft.addEventListener('mouseleave', () => elevatorAnim.play());
         }
     }
-    
-    // 3b. Background Floors Animation (G to 8)
-    const floorContainer = document.getElementById('floor-display');
+
     if (floorContainer) {
         const floors = ['G', '1', '2', '3', '4', '5', '6', '7', '8'];
         floors.forEach(floor => {
@@ -77,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
             div.innerText = floor;
             floorContainer.appendChild(div);
         });
-        // Scroll the container down infinitely to simulate going UP
         gsap.to(floorContainer, { y: "50%", duration: 12, ease: "linear", repeat: -1, modifiers: { y: gsap.utils.unitize(y => parseFloat(y) % 1500) } });
     }
 
@@ -86,14 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.from(".gsap-fade", { y: 30, opacity: 0, duration: 1, stagger: 0.2, ease: "power2.out" });
     }
 
-    // 5. Catalog Rendering
+    // 5. Catalog Rendering (Index Page Only)
     const productContainer = document.getElementById('product-list-container');
     if (productContainer) {
-        const grouped = products.reduce((acc, curr) => {
-            (acc[curr.category] = acc[curr.category] || []).push(curr);
-            return acc;
-        }, {});
-
+        const grouped = products.reduce((acc, curr) => { (acc[curr.category] = acc[curr.category] || []).push(curr); return acc; }, {});
         Object.keys(grouped).forEach(category => {
             const categoryId = 'cat-' + category.toLowerCase().replace(/[^a-z0-9]+/g, '-');
             const wrapper = document.createElement('div');
@@ -101,19 +100,20 @@ document.addEventListener('DOMContentLoaded', () => {
             wrapper.innerHTML = `<h3 class="cat-header">${category}</h3>`;
             const grid = document.createElement('div');
             grid.className = 'grid-layout';
-
             grouped[category].forEach(item => {
                 grid.innerHTML += `
                     <div class="prod-card">
                         <div class="p-img-wrap">
                             <img src="${getImage(item)}" alt="${item.name}" class="p-img">
                         </div>
-                        <div class="p-body">
-                            <h4 class="p-title">${item.name}</h4>
-                            <span class="p-price">${item.price}</span>
-                            <p class="p-desc">${item.details}</p>
-                            <a href="product-detail.html?id=${item.id}" class="p-link">View Specs →</a>
-                        </div>
+                        <a href="product-detail.html?id=${item.id}" class="p-link" style="text-decoration:none; color:inherit;">
+                            <div class="p-body">
+                                <h4 class="p-title">${item.name}</h4>
+                                <span class="p-price">${item.price}</span>
+                                <p class="p-desc">${item.details}</p>
+                                <span style="font-weight:600; font-size:0.9rem; color:#3b82f6;">View Specs →</span>
+                            </div>
+                        </a>
                     </div>
                 `;
             });
@@ -137,28 +137,70 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('d-details').textContent = product.details;
             const specsList = document.getElementById('d-specs');
             product.specs.forEach(spec => { const li = document.createElement('li'); li.textContent = spec; specsList.appendChild(li); });
-            
             gsap.from(".detail-layout", { y: 20, opacity: 0, duration: 0.8 });
 
+            // --- RELATED SLIDER LOGIC ---
             const recWrapper = document.getElementById('rec-section-wrapper');
-            const recTrack = document.getElementById('rec-track');
+            const recTrack = document.getElementById('rec-track'); // The container
             const relatedItems = products.filter(p => p.category === product.category && p.id !== product.id);
 
             if (relatedItems.length > 0) {
                 recWrapper.style.display = 'block';
-                const createCard = (item) => `
-                    <div class="rec-card">
-                        <img src="${getImage(item)}" alt="${item.name}" class="rec-img">
-                        <div class="rec-body">
-                            <h4 class="rec-title">${item.name}</h4>
-                            <span class="p-price" style="font-size:0.9rem">${item.price}</span>
-                            <a href="product-detail.html?id=${item.id}" class="p-link" style="font-size:0.8rem">View Details</a>
+                
+                // 1. Create wrapper structure with Buttons
+                // Note: We overwrite rec-section-wrapper content to include buttons + track
+                recWrapper.innerHTML = `
+                    <h3 class="cat-header">Related Solutions</h3>
+                    <div class="slider-wrapper">
+                        <button class="slider-btn left" onclick="scrollSlider(-320)">&#8592;</button>
+                        <div class="slider-track" id="slider-track">
+                            ${relatedItems.map(item => `
+                                <div class="rec-card" onclick="window.location.href='product-detail.html?id=${item.id}'">
+                                    <img src="${getImage(item)}" alt="${item.name}" class="rec-img">
+                                    <div class="rec-body">
+                                        <h4 class="rec-title">${item.name}</h4>
+                                        <span class="p-price" style="font-size:0.9rem">${item.price}</span>
+                                        <div style="margin-top:10px; font-size:0.8rem; font-weight:600; color:#3b82f6;">View Details</div>
+                                    </div>
+                                </div>
+                            `).join('')}
                         </div>
+                        <button class="slider-btn right" onclick="scrollSlider(320)">&#8594;</button>
                     </div>
                 `;
-                let content = relatedItems.map(item => createCard(item)).join('');
-                if(relatedItems.length < 3) recTrack.innerHTML = content + content + content + content;
-                else recTrack.innerHTML = content + content;
+
+                // 2. Auto Scroll Logic
+                const track = document.getElementById('slider-track');
+                let scrollAmount = 0;
+                let autoScroll;
+
+                // Function to scroll manually
+                window.scrollSlider = (amount) => {
+                    track.scrollBy({ left: amount, behavior: 'smooth' });
+                    // Reset auto scroll timer on interaction
+                    clearInterval(autoScroll);
+                    startAutoScroll();
+                };
+
+                // Function to start auto scroll
+                function startAutoScroll() {
+                    autoScroll = setInterval(() => {
+                        // If we reached the end, go back to start
+                        if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 10) {
+                            track.scrollTo({ left: 0, behavior: 'smooth' });
+                        } else {
+                            track.scrollBy({ left: 320, behavior: 'smooth' });
+                        }
+                    }, 3000); // 3 Seconds speed (Slower)
+                }
+
+                // Start
+                startAutoScroll();
+
+                // Stop on hover
+                track.addEventListener('mouseenter', () => clearInterval(autoScroll));
+                track.addEventListener('mouseleave', () => startAutoScroll());
+
             } else {
                 recWrapper.style.display = 'none';
             }
