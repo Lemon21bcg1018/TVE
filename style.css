@@ -227,7 +227,7 @@ body {
 /* ✅ HERO IMAGE = 40% OF SCREEN HEIGHT */
 .detail-hero-img {
     width: 100%;
-    height: 100vh;           /* ✅ EXACTLY 40% OF PAGE HEIGHT */
+    height: 50vh;           /* ✅ EXACTLY 40% OF PAGE HEIGHT */
     object-fit: cover;     /* ✅ Perfect crop */
     display: block;
 }
@@ -394,3 +394,4 @@ body {
     /* Hide slider buttons on mobile (swipe is natural) */
     .slider-btn { display: none; }
 }
+
