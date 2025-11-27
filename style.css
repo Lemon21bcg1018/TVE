@@ -217,18 +217,21 @@ body {
     box-shadow: var(--shadow);
 }
 
-/* Full-width Image Wrapper */
+/* Image Wrapper – centers the image */
 .detail-left {
     width: 100%;
-    overflow: hidden;
-    border-radius: 16px;
+    display: flex;
+    justify-content: center;   /* center horizontally */
+    align-items: center;       /* center vertically within this area */
+    padding: 20px 0;
 }
 
-/* ✅ HERO IMAGE = 40% OF SCREEN HEIGHT */
+/* ✅ FIXED 600x600 IMAGE, CENTERED */
 .detail-hero-img {
-    width: 100%;
-    height: 50vh;           /* ✅ EXACTLY 40% OF PAGE HEIGHT */
-    object-fit: cover;     /* ✅ Perfect crop */
+    width: 600px;
+    height: 600px;
+    object-fit: cover;
+    border-radius: 16px;
     display: block;
 }
 
@@ -376,14 +379,21 @@ body {
     .nav-dropdown:hover .dropdown-content { display: block; }
 
     .btn-group { justify-content: center; margin-bottom: 10px; }
-    .detail-layout { grid-template-columns: 1fr; }
+    .detail-layout { padding: 24px; }
     .stats-grid { flex-direction: column; gap: 20px; }
 
     /* Elevator Visual */
     .hero-visual { transform: scale(0.55); transform-origin: top center; margin-top: 10px; height: 300px; margin-bottom: 0; }
 
+    /* Detail image – responsive square on mobile */
+    .detail-hero-img {
+        width: 90vw;
+        height: 90vw;
+        max-width: 600px;
+        max-height: 600px;
+    }
+
     /* --- MOBILE SLIDER FIXES --- */
-    /* Make cards much wider on mobile for visibility */
     .rec-card {
         min-width: 85vw; /* 85% of screen width */
         max-width: 85vw;
@@ -394,4 +404,3 @@ body {
     /* Hide slider buttons on mobile (swipe is natural) */
     .slider-btn { display: none; }
 }
-
