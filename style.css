@@ -192,19 +192,113 @@ body {
 .p-link { color: var(--bg-dark); text-decoration: none; font-weight: 600; font-size: 0.9rem; border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
 
 /* ================= DETAIL VIEW ================= */
-.detail-body { background-color: var(--grey-light); padding-top: 80px; }
-.back-btn { text-decoration: none; color: var(--text-main); font-weight: 600; cursor: pointer; display: inline-block; margin-bottom: 20px; }
+.detail-body {
+    background-color: var(--grey-light);
+    padding-top: 80px;
+}
 
-.detail-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 50px; background: white; padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow); }
-.detail-hero-img { width: 100%; border-radius: var(--radius); }
-.category-tag { background: #eff6ff; color: var(--primary); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
-.detail-right h1 { font-family: var(--font-display); font-size: 2.5rem; margin: 15px 0 10px; color: var(--bg-dark); }
-.price-tag { font-size: 1.5rem; color: var(--text-light); margin-bottom: 30px; font-weight: 400; }
-.info-block { margin-bottom: 30px; }
-.info-block h3 { font-family: var(--font-display); margin-bottom: 10px; font-size: 1.1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; }
-.spec-grid { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.spec-grid li { font-size: 0.9rem; color: var(--text-main); background: #f8fafc; padding: 8px; border-radius: 4px; }
-.full-width { width: 100%; text-align: center; }
+.back-btn {
+    text-decoration: none;
+    color: var(--text-main);
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+/* Main Card */
+.detail-layout {
+    display: flex;
+    flex-direction: column;          /* Image on top, content below */
+    gap: 32px;
+    background: white;
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+/* Full-width Image Wrapper */
+.detail-left {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+/* ✅ HERO IMAGE = 40% OF SCREEN HEIGHT */
+.detail-hero-img {
+    width: 100%;
+    height: 100vh;           /* ✅ EXACTLY 40% OF PAGE HEIGHT */
+    object-fit: cover;     /* ✅ Perfect crop */
+    display: block;
+}
+
+/* Content Section */
+.detail-right {
+    width: 100%;
+}
+
+/* Category Pill */
+.category-tag {
+    background: #eff6ff;
+    color: var(--primary);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* Product Title */
+.detail-right h1 {
+    font-family: var(--font-display);
+    font-size: 2.6rem;
+    margin: 18px 0 10px;
+    color: var(--bg-dark);
+}
+
+/* Price */
+.price-tag {
+    font-size: 1.5rem;
+    color: var(--text-light);
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+/* Sections */
+.info-block {
+    margin-bottom: 30px;
+}
+
+.info-block h3 {
+    font-family: var(--font-display);
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 8px;
+}
+
+/* Specs Grid */
+.spec-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.spec-grid li {
+    font-size: 0.95rem;
+    color: var(--text-main);
+    background: #f8fafc;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+/* Button Fix */
+.full-width {
+    width: 100%;
+    text-align: center;
+}
+
 
 /* ================= SLIDER / CAROUSEL ================= */
 .slider-wrapper {
