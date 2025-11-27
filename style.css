@@ -228,8 +228,8 @@ body {
 
 /* ✅ FIXED 600x600 IMAGE, CENTERED */
 .detail-hero-img {
-    width: 600px;
-    height: 600px;
+    width: 400px;
+    height: 400px;
     object-fit: cover;
     border-radius: 16px;
     display: block;
@@ -404,3 +404,4 @@ body {
     /* Hide slider buttons on mobile (swipe is natural) */
     .slider-btn { display: none; }
 }
+
