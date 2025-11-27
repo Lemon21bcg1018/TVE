@@ -31,14 +31,12 @@ body {
 }
 
 /* ================= CUSTOM ELEVATOR SCROLLBAR ================= */
-/* The "Shaft" */
 ::-webkit-scrollbar { width: 18px; }
 ::-webkit-scrollbar-track {
     background: var(--bg-darker);
     border-left: 1px solid #334155;
     border-right: 1px solid #334155;
 }
-/* The "Cabin" */
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(to right, #f59e0b, #fbbf24, #f59e0b);
     border: 3px solid var(--bg-darker);
@@ -109,11 +107,11 @@ body {
     position: absolute; right: 20%; top: -20%; width: 200px;
     display: flex; flex-direction: column-reverse; z-index: 0; pointer-events: none; opacity: 0.6;
 }
-/* .bg-floor-number {
+.bg-floor-number {
     font-family: var(--font-display); font-size: 18rem; font-weight: 700; line-height: 1.2; text-align: center;
-    color: transparent; -webkit-text-stroke: 3px #fbbf24;
+    color: transparent; -webkit-text-stroke: 3px rgba(245, 158, 11, 0.3);
     text-shadow: 0 0 50px rgba(245, 158, 11, 0.4); margin-bottom: 50px;
-} */
+}
 
 .hero-container {
     position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
@@ -208,17 +206,57 @@ body {
 .spec-grid li { font-size: 0.9rem; color: var(--text-main); background: #f8fafc; padding: 8px; border-radius: 4px; }
 .full-width { width: 100%; text-align: center; }
 
-/* RECOMMENDED SCROLL */
-.marquee-container { width: 100%; overflow: hidden; position: relative; padding: 20px 0; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
-.marquee-track { display: flex; gap: 30px; width: max-content; animation: scroll 30s linear infinite; }
-.marquee-track:hover { animation-play-state: paused; }
-@keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+/* ================= SLIDER / CAROUSEL ================= */
+.slider-wrapper {
+    position: relative;
+    padding: 20px 0;
+}
 
-.rec-card { min-width: 280px; max-width: 280px; background: white; border-radius: var(--radius); overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; transition: transform 0.3s; cursor: pointer; }
+.slider-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto; /* Enable scroll */
+    scroll-behavior: smooth;
+    padding-bottom: 20px; /* Space for scrollbar if visible */
+    /* Hide scrollbar for cleaner look */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE */
+}
+.slider-track::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+/* Slider Buttons */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: 1px solid #e2e8f0;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 10;
+    font-size: 1.2rem;
+    color: var(--bg-dark);
+    transition: 0.3s;
+}
+.slider-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+.slider-btn.left { left: -20px; }
+.slider-btn.right { right: -20px; }
+
+/* Recommendation Card */
+.rec-card {
+    min-width: 280px; max-width: 280px; /* Desktop default */
+    background: white; border-radius: var(--radius);
+    overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #f1f5f9;
+    transition: transform 0.3s; flex-shrink: 0; /* Prevent shrinking */
+    cursor: pointer;
+}
 .rec-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-.rec-img { width: 100%; height: 160px; object-fit: cover; }
+.rec-img { width: 100%; height: 180px; object-fit: cover; }
 .rec-body { padding: 15px; }
-.rec-title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 5px; color: var(--bg-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rec-title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 5px; color: var(--bg-dark); }
 
 /* ================= FOOTER ================= */
 .footer { background: var(--bg-darker); color: #94a3b8; padding: 80px 0 20px; }
@@ -230,45 +268,35 @@ body {
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
-    /* FIX: Ensure hero can grow and isn't squashed */
-    .hero-section {
-        height: auto;
-        min-height: 100vh;
-        align-items: flex-start; /* Start content from top, don't center */
-    }
-
-    .hero-container {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 30px;
-        /* FIX: Increased padding to push content below the fixed navbar */
-        padding-top: 130px; 
-        padding-bottom: 60px;
-    }
-
-    .hero-text-content h1 {
-        font-size: 2.8rem;
-        line-height: 1.2;
-    }
-
-    /* FIX: Scale down elevator so it fits on mobile */
-    .hero-visual {
-        transform: scale(0.65);
-        transform-origin: top center;
-        margin-top: 0px;
-        margin-bottom: -50px;
-    }
-
-    .btn-group { justify-content: center; }
+    /* Hero fixes */
+    .hero-section { min-height: 100dvh; height: auto; align-items: flex-start; overflow-x: hidden; }
+    .hero-container { grid-template-columns: 1fr; text-align: center; gap: 15px; padding-top: 90px; padding-bottom: 20px; }
+    .hero-text-content h1 { font-size: 2.2rem; line-height: 1.1; margin-bottom: 15px; }
+    .hero-text-content p { font-size: 0.95rem; margin-bottom: 25px; padding: 0 15px; }
     
-    /* Nav Handling */
+    /* Navbar */
     .nav-menu { display: none; }
     .menu-toggle { display: block; color: var(--bg-dark); }
-    
-    .detail-layout { grid-template-columns: 1fr; }
-    .stats-grid { flex-direction: column; gap: 20px; }
-    
-    /* Fix mobile dropdown display */
+    .brand { font-size: 1.3rem; }
     .dropdown-content { position: static; box-shadow: none; border: none; padding-left: 20px; background: #f8fafc; display: none; }
     .nav-dropdown:hover .dropdown-content { display: block; }
+
+    .btn-group { justify-content: center; margin-bottom: 10px; }
+    .detail-layout { grid-template-columns: 1fr; }
+    .stats-grid { flex-direction: column; gap: 20px; }
+
+    /* Elevator Visual */
+    .hero-visual { transform: scale(0.55); transform-origin: top center; margin-top: 10px; height: 300px; margin-bottom: 0; }
+
+    /* --- MOBILE SLIDER FIXES --- */
+    /* Make cards much wider on mobile for visibility */
+    .rec-card {
+        min-width: 85vw; /* 85% of screen width */
+        max-width: 85vw;
+    }
+    .rec-img {
+        height: 220px; /* Taller image */
+    }
+    /* Hide slider buttons on mobile (swipe is natural) */
+    .slider-btn { display: none; }
 }
