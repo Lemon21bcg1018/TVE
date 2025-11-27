@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TVE Travel Elevator | Vertical Excellence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand">TVE<span class="dot">.</span></a>
+            <button class="menu-toggle" aria-label="Menu">☰</button>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-item">Home</a>
+                <div class="nav-dropdown">
+                    <span class="nav-item dropdown-trigger">Categories ▾</span>
+                    <div class="dropdown-content">
+                        <a href="#cat-passenger-elevators">Passenger Elevators</a>
+                        <a href="#cat-home-elevators">Home Elevators</a>
+                        <a href="#cat-elevator-parts">Parts & Accessories</a>
+                        <a href="#cat-specialized-elevators">Specialized / Goods</a>
+                        <a href="#cat-capsule-elevators">Capsule Lifts</a>
+                        <a href="#cat-automobile-elevators">Car Lifts</a>
+                        <a href="#cat-services">Services</a>
+                    </div>
+                </div>
+                <a href="#about" class="nav-item">Company</a>
+                <a href="#contact" class="btn-nav">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home" class="hero-section">
+        <div class="hero-bg">
+            <div class="moving-grid"></div>
+            <div id="floor-display" class="floor-display-container"></div>
+        </div>
+        
+        <div class="container hero-container">
+            <div class="hero-text-content">
+                <span class="hero-label gsap-fade">Premium Lift Solutions</span>
+                <h1 class="gsap-fade">Elevating <br><span class="outline-text">Standards.</span></h1>
+                <p class="gsap-fade">State-of-the-art vertical mobility for industrial, residential, and commercial spaces. Engineered for safety, designed for luxury.</p>
+                <div class="btn-group gsap-fade">
+                    <a href="#catalog" class="btn-primary">View Products</a>
+                    <a href="#contact" class="btn-outline">Get a Quote</a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="elevator-shaft">
+                    <div class="elevator-cabin-mover">
+                        <div class="cabin-interior">
+                            <div class="cabin-door-left"></div>
+                            <div class="cabin-door-right"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="stats-bar">
+        <div class="container stats-grid">
+            <div class="stat-item">
+                <h3>100%</h3>
+                <p>Safety Rating</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>Support Team</p>
+            </div>
+            <div class="stat-item">
+                <h3>Custom</h3>
+                <p>Design Specs</p>
+            </div>
+        </div>
+    </div>
+
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Expertise</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon">⚙️</div>
+                    <h3>Precision Engineering</h3>
+                    <p>Micro-processor controlled systems ensuring smooth acceleration and millimeter-perfect leveling.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🏗️</div>
+                    <h3>Industrial Strength</h3>
+                    <p>Heavy-duty materials designed to withstand immense loads in factories and warehouses.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🏠</div>
+                    <h3>Residential Luxury</h3>
+                    <p>Silent operation and premium cabin finishes that blend seamlessly into modern homes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="catalog" class="section bg-grey">
+        <div class="container">
+            <div class="section-title">
+                <h2>Product Catalog</h2>
+            </div>
+            <div id="product-list-container"></div>
+        </div>
+    </section>
+
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <h2>TVE Travel Elevator</h2>
+                    <p id="footer-address">Loading Address...</p>
+                    <div id="footer-phones" class="phone-list"></div>
+                    <p id="footer-email" class="email-link"></p>
+                </div>
+                <div class="footer-cta">
+                    <h3>Ready to upgrade?</h3>
+                    <a href="tel:+918279404446" class="btn-primary">Call Now</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="year"></span> TVE Travel Elevator. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Ensure catalog cards are clickable and redirect
+        // This runs after the main script populates the grid
+        document.addEventListener('DOMContentLoaded', () => {
+            // Use event delegation for dynamically created elements
+            const productContainer = document.getElementById('product-list-container');
+            if (productContainer) {
+                productContainer.addEventListener('click', (e) => {
+                    const card = e.target.closest('.prod-card');
+                    if (card) {
+                        // Find the link inside the card
+                        const link = card.querySelector('a.p-link');
+                        if (link) {
+                            window.location.href = link.href;
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
