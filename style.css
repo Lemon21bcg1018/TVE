@@ -363,6 +363,202 @@ body {
 .footer-bottom { text-align: center; font-size: 0.85rem; }
 .footer-form input, .footer-form textarea { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 15px; border-radius: 8px; width: 100%; margin-bottom: 15px; font-family: var(--font-body); }
 
+
+
+/* ================= NEW ABOUT SECTION (2-COL) ================= */
+
+/* Macro Layout */
+.about-wrapper {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr; /* 40% - 60% split approx */
+    gap: 80px;
+    align-items: center;
+    position: relative;
+}
+
+/* --- Left Column: Visuals --- */
+.about-visuals {
+    position: relative;
+    padding: 20px;
+}
+
+/* Decorative Background Pattern */
+.dots-pattern {
+    position: absolute;
+    width: 80%;
+    height: 90%;
+    left: -20px;
+    top: -20px;
+    z-index: 0;
+    opacity: 0.6;
+    background-image: radial-gradient(#cbd5e1 2px, transparent 2px);
+    background-size: 20px 20px; /* Dotted Grid */
+}
+
+/* The Main Card */
+.visual-card {
+    position: relative;
+    z-index: 2;
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: 0 20px 40px -5px rgba(0,0,0,0.15); /* Elevated Lift */
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.visual-card:hover {
+    transform: translateY(-5px); /* Interaction hint */
+}
+
+/* Top Section: Image */
+.card-image-wrap {
+    width: 100%;
+    height: 320px; /* Specific aspect ratio */
+    overflow: hidden;
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Bottom Section: Footer */
+.card-footer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 30px;
+    background: var(--white);
+    border-top: 1px solid #f1f5f9;
+}
+
+/* Icon Styling */
+.contact-icon-circle {
+    width: 50px;
+    height: 50px;
+    background: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* Text Stack */
+.contact-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-light);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.contact-data {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--bg-dark);
+}
+
+/* --- Right Column: Content --- */
+.about-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.eyebrow-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-light);
+    margin-bottom: 12px;
+    display: inline-block;
+}
+
+.about-headline {
+    font-family: var(--font-display);
+    font-size: 3.5rem; /* Large Headline */
+    line-height: 1.1;
+    color: var(--bg-dark);
+    margin-bottom: 24px;
+    font-weight: 700;
+}
+
+.about-body p {
+    font-size: 1.05rem;
+    color: var(--text-main);
+    margin-bottom: 20px;
+    max-width: 90%;
+    line-height: 1.7;
+}
+
+/* Feature List */
+.about-features {
+    list-style: none;
+    margin: 10px 0 32px;
+    padding: 0;
+}
+
+.about-features li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    color: var(--bg-dark);
+    margin-bottom: 14px;
+    font-family: var(--font-display);
+}
+
+.check-icon {
+    width: 24px;
+    height: 24px;
+    background: rgba(59, 130, 246, 0.1); /* Light Primary */
+    color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 900;
+}
+
+/* Specific Button Override */
+.btn-sharp {
+    border-radius: 0px !important; /* Sharp corners */
+    padding: 18px 40px; /* Slightly larger clickable area */
+    background: var(--bg-dark); /* Matches brand dark blue */
+}
+.btn-sharp:hover {
+    background: var(--primary);
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 900px) {
+    .about-wrapper {
+        grid-template-columns: 1fr; /* Stack vertically */
+        gap: 50px;
+    }
+    
+    .about-visuals {
+        max-width: 500px;
+        margin: 0 auto;
+        width: 100%;
+    }
+    
+    .about-headline {
+        font-size: 2.5rem;
+    }
+}
+
 /* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
     /* Hero fixes */
