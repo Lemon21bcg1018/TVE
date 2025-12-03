@@ -600,3 +600,45 @@ body {
     /* Hide slider buttons on mobile (swipe is natural) */
     .slider-btn { display: none; }
 }
+/* --- UPDATED/NEW CSS FOR ABOUT PAGE --- */
+
+/* --- NEW CSS FOR ABOUT PAGE LAYOUT --- */
+
+/* 1. New Hero/Header for About Page */
+.about-hero {
+    /* Reuses detail-body background/padding structure but adjusts the inner padding */
+    background-color: var(--bg-dark); /* Dark background for high contrast */
+    color: var(--white);
+    padding: 120px 0 80px; /* Reduced vertical padding from full 'hero-section' */
+    text-align: center;
+}
+
+.about-hero h1 {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    margin-bottom: 8px;
+    line-height: 1.1;
+}
+
+.about-hero p {
+    font-size: 1.2rem;
+    color: #94a3b8; /* text-light equivalent */
+    font-weight: 300;
+}
+
+/* 2. Responsive adjustment for Core Narrative content */
+@media (max-width: 900px) {
+    .about-content {
+        align-items: center; /* Center content on mobile stack */
+        text-align: center;
+    }
+    .about-body p {
+        max-width: 100%; /* Use full width */
+    }
+    .about-features {
+        margin: 10px auto 32px; /* Center feature list */
+    }
+    .about-features li {
+        justify-content: center; /* Center list items when stacked */
+    }
+}
